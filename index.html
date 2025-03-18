@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Protegido</title>
-    <style>
-        body {
+    <!-- Aqui você pode incluir seus arquivos CSS originais -->
+    <!-- <link rel="stylesheet" href="seu-estilo.css"> -->
+
+    <!-- Estilos apenas para a tela de login -->
+    <style id="loginStyles">
+        body.login-page {
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -13,6 +17,20 @@
             height: 100vh;
             margin: 0;
             background-color: #f5f5f5;
+            overflow: hidden;
+        }
+        
+        #loginOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
         }
         
         #loginForm {
@@ -24,13 +42,7 @@
             text-align: center;
         }
         
-        #contentArea {
-            display: none;
-            width: 100%;
-            max-width: 800px;
-        }
-        
-        input {
+        #loginForm input {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -39,7 +51,7 @@
             box-sizing: border-box;
         }
         
-        button {
+        #loginForm button {
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -49,7 +61,7 @@
             font-size: 16px;
         }
         
-        button:hover {
+        #loginForm button:hover {
             background-color: #45a049;
         }
         
@@ -59,18 +71,20 @@
         }
     </style>
 </head>
-<body>
-    <!-- Formulário de Login -->
-    <div id="loginForm">
-        <h2>Acesso Restrito</h2>
-        <p>Digite a senha para acessar o conteúdo:</p>
-        <input type="password" id="passwordInput" placeholder="Senha">
-        <button onclick="checkPassword()">Acessar</button>
-        <p id="errorMsg" class="error"></p>
+<body class="login-page">
+    <!-- Overlay de Login -->
+    <div id="loginOverlay">
+        <div id="loginForm">
+            <h2>Acesso Restrito</h2>
+            <p>Digite a senha para acessar o conteúdo:</p>
+            <input type="password" id="passwordInput" placeholder="Senha">
+            <button onclick="checkPassword()">Acessar</button>
+            <p id="errorMsg" class="error"></p>
+        </div>
     </div>
 
-    <!-- Área de Conteúdo Protegido -->
-    <div id="contentArea">
+    <!-- Conteúdo original do seu site -->
+    <div id="originalContent" style="display: none;">
         <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -1921,10 +1935,19 @@
             }
         }
         
-        // Função para mostrar o conteúdo
+        // Função para mostrar o conteúdo original
         function showContent() {
-            document.getElementById("loginForm").style.display = "none";
-            document.getElementById("contentArea").style.display = "block";
+            // Remove o overlay de login
+            document.getElementById("loginOverlay").style.display = "none";
+            
+            // Remove a classe login-page do body
+            document.body.classList.remove("login-page");
+            
+            // Remove os estilos de login
+            document.getElementById("loginStyles").disabled = true;
+            
+            // Mostra o conteúdo original
+            document.getElementById("originalContent").style.display = "block";
         }
     </script>
 </body>
