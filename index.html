@@ -3,6 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Protegido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        
+        #loginForm {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+        }
+        
+        #contentArea {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Formulário de Login -->
+    <div id="loginForm">
+        <h2>Acesso Restrito</h2>
+        <p>Digite a senha para acessar o conteúdo:</p>
+        <input type="password" id="passwordInput" placeholder="Senha">
+        <button onclick="checkPassword()">Acessar</button>
+        <p id="errorMsg" class="error"></p>
+    </div>
+
+    <!-- Área de Conteúdo Protegido -->
+    <div id="contentArea">
+        <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comparativo de Marcas - Evolution vs. MF</title>
     <style>
         * {
@@ -1810,6 +1883,49 @@
                 });
             });
         });
+    </script>
+</body>
+</html>
+    </div>
+
+    <script>
+        // Definir a senha (você pode alterar para a senha desejada)
+        const correctPassword = "senha123";
+        
+        // Verificar se já está autenticado ao carregar a página
+        window.onload = function() {
+            const isAuthenticated = localStorage.getItem('authenticated');
+            if (isAuthenticated === 'true') {
+                showContent();
+            }
+        };
+        
+        // Permitir que o usuário pressione Enter para enviar
+        document.getElementById("passwordInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+        });
+        
+        // Função para verificar a senha
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            
+            if (password === correctPassword) {
+                // Senha correta
+                localStorage.setItem('authenticated', 'true');
+                showContent();
+            } else {
+                // Senha incorreta
+                document.getElementById("errorMsg").textContent = "Senha incorreta. Tente novamente.";
+            }
+        }
+        
+        // Função para mostrar o conteúdo
+        function showContent() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("contentArea").style.display = "block";
+        }
     </script>
 </body>
 </html>
